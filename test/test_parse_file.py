@@ -35,8 +35,8 @@ class TestParseFile(unittest.TestCase):
             self.parse_file.parse_content(self.auth_log_miss_ip)
         self.assertEqual(len(captured.records), 2)
         self.assertEqual(captured.records[0].getMessage(),
-                         "Authentication log " + \
-                         self.auth_log_miss_ip[0] + \
+                         "Authentication log " +
+                         self.auth_log_miss_ip[0] +
                          " lacks required info.")
         self.assertEqual(captured.records[1].getMessage(),
                          "All authentication logs have been processed.")
@@ -45,7 +45,8 @@ class TestParseFile(unittest.TestCase):
         self.assertEqual(self.db.knownUserList, ["admin"])
         self.assertEqual(self.db.knownDeviceList,
                          ["28b0016db5cd425975859abe570228f0"])
-        self.assertEqual(self.db.successfulLoginDict, {"admin": 1619520252.700172})
+        self.assertEqual(self.db.successfulLoginDict,
+                         {"admin": 1619527452.700172})
         self.assertEqual(self.db.failedLoginDict, {})
         self.assertEqual(self.db.failedLoginCount, 0)
         self.assertEqual(self.db.knownIPList, ["10.97.3.53"])
