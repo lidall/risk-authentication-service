@@ -1,7 +1,8 @@
 import unittest
 import json
 from pathlib import Path
-from risk_authentication.parse_file import ParseFile, RiskDB
+from risk_authentication.parse_file import ParseFile
+from risk_authentication.risk_database import RiskDB
 
 
 class TestParseFile(unittest.TestCase):
@@ -20,8 +21,9 @@ class TestParseFile(unittest.TestCase):
         with self.assertLogs() as captured:
             self.parse_file.parse_content(self.invalid_auth_log)
         self.assertEqual(len(captured.records), 1)
-        self.assertEqual(captured.records[0].getMessage(),
-                         "Audit logs are not in json format, please double check.")
+        self.assertEqual(
+        	captured.records[0].getMessage(),
+            "Audit logs are not in json format, please double check.")
 
         with self.assertLogs() as captured:
             self.parse_file.parse_content(self.valid_normal_log)
@@ -32,7 +34,8 @@ class TestParseFile(unittest.TestCase):
         with self.assertLogs() as captured:
             self.parse_file.parse_content(self.auth_log_miss_ip)
         self.assertEqual(len(captured.records), 2)
-        self.assertContains(captured.records[0].getMessage(), "Authentication log lacks required info.")
+        self.assertContains(captured.records[0].getMessage(),
+        					"Authentication log lacks required info.")
         self.assertEqual(captured.records[1].getMessage(),
                          "All authentication logs have been processed.")
 
@@ -44,4 +47,3 @@ class TestParseFile(unittest.TestCase):
         self.assertEqual(self.db.failedLoginDict, {})
         self.assertEqual(self.db.failedLoginCount, 0)
         self.assertEqual(self.db.knownIPList, ["10.97.3.53"])
-

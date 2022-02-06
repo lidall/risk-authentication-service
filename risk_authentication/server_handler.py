@@ -3,6 +3,7 @@ from .risk_database import RiskDB
 from .parse_file import ParseFile
 from aiohttp import web
 
+
 class Handler:
     def __init__(self):
         self.db = RiskDB()
@@ -24,7 +25,7 @@ class Handler:
 
     async def handle_device_check(self, request):
         device = request.rel_url.query['device']
-        if ip in self.db.knownDeviceList:
+        if device in self.db.knownDeviceList:
             return web.Response(text="true")
         else:
             return web.Response(text="false")
@@ -39,7 +40,8 @@ class Handler:
     async def handle_succ_logindate(self, request):
         username = request.rel_url.query['username']
         if username in self.db.successfulLoginDict.keys():
-            timestamp = self.parsefunc.parse_unixtime(self.db.successfulLoginDict[username])
+            timestamp = self.parsefunc.parse_unixtime(
+                self.db.successfulLoginDict[username])
             return web.Response(text=str(timestamp))
         else:
             return web.Response(text="No record for this user!")
@@ -47,7 +49,8 @@ class Handler:
     async def handle_fail_logindate(self, request):
         username = request.rel_url.query['username']
         if username in self.db.failedLoginDict.keys():
-            timestamp = self.parsefunc.parse_unixtime(self.db.failedLoginDict[username])
+            timestamp = self.parsefunc.parse_unixtime(
+                self.db.failedLoginDict[username])
             return web.Response(text=str(timestamp))
         else:
             return web.Response(text="No record for this user!")
