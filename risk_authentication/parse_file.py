@@ -33,7 +33,7 @@ class ParseFile:
                 try:
                     json_object = json.loads(log_detail)
                 except ValueError:
-                    self.parseLog.error("Audit logs is not in json format, \
+                    self.parseLog.error("Audit logs are not in json format, \
                                          please double check.")
                 if json_object and all( info in json_object for info in authentication_info):
                     username = json_object.get("distinguished_name_user")
@@ -56,4 +56,4 @@ class ParseFile:
                 else:
                     self.parseLog.warning("Authentication log %s lacks required info.", line)
 
-        self.parseLog.info("All authentication log has been processed.")
+        self.parseLog.info("All authentication logs have been processed.")
