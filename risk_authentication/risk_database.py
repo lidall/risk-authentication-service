@@ -47,7 +47,7 @@ class RiskDB:
             self.failedLoginDict.update({username: unix_time})
 
     def set_failedLoginCount(self, unix_time):
-        # if unix_time >= self.weektime_start 
+        # if unix_time >= self.weektime_start
         # and unix_time <= self.weektime_end:
         # self.failedLoginCount += 1
         self.failedLoginCount += 1

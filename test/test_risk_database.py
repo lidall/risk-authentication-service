@@ -38,13 +38,13 @@ class TestRiskDatabase(unittest.TestCase):
     def test_set_failedLoginDict(self):
         # Test if old Bob record has been ignored
         self.db.set_failedLoginDict('Bob', 1644151009)
-        self.assertEqual(self.db.successfulLoginDict['Bob'], 1644151199)
+        self.assertEqual(self.db.failedLoginDict['Bob'], 1644151009)
         # Test if new Bob record has been updated
         self.db.set_failedLoginDict('Bob', 1644151599)
-        self.assertEqual(self.db.successfulLoginDict['Bob'], 1644151599)
+        self.assertEqual(self.db.failedLoginDict['Bob'], 1644151599)
         # Test if new Kevin record has been added into the dict
         self.db.set_failedLoginDict('Kevin', 1644151530)
-        self.assertEqual(self.db.successfulLoginDict['Kevin'], 1644151530)
+        self.assertEqual(self.db.failedLoginDict['Kevin'], 1644151530)
 
     def set_failedLoginCount(self):
         # Since in the main function I have simplify the adding method:
