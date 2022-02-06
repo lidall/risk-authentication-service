@@ -1,13 +1,16 @@
 import json
 import datetime
 import logging
-
+import time
+import os
 
 class ParseFile:
     def __init__(self, db):
         self.db = db
         self.parseLog = logging.getLogger(__name__)
         self.parseLog.setLevel(logging.DEBUG)
+        os.environ['TZ'] = 'Europe/Stockholm'
+        time.tzset()
 
     def parse_timestamp(self, timestamp):
         date_format = datetime.datetime.strptime(
