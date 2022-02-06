@@ -3,11 +3,6 @@ from risk_authentication.server_handler import Handler
 from aiohttp import web
 
 handler = Handler()
-handler.db.knownIPList = ['10.192.2.2']
-handler.db.knownUserList = ['Bob']
-handler.db.knownDeviceList = ['3deakcskae4cmsk']
-handler.db.successfulLoginDict = {'Bob': 1644151100.012}
-handler.db.failedLoginDict = {'Bob': 1644151199.341}
 
 
 @pytest.fixture
@@ -21,19 +16,19 @@ def cli(loop, aiohttp_client):
                        handler.handle_succ_logindate)
     app.router.add_get('/risk/lastfailedlogindate',
                        handler.handle_fail_logindate)
+    app.router.add_get('/risk/failedlogincountlastweek',
+                       handler.handle_fail_logincount)
     app.router.add_get('/risk/isipinternal', handler.handle_internal_check)
     return loop.run_until_complete(aiohttp_client(app))
 
 
-async def test_handle_log(cli):
+async def test_integration(cli):
     with open('./test/client/data.txt', 'rb') as f:
         resp = await cli.post('/log', data={'key': f})
     assert resp.status == 200
     assert await resp.text() == 'Log uploaded!'
 
-
-async def test_handle_user_check(cli):
-    resp = await cli.get('/risk/isuserknown?username=Bob')
+    resp = await cli.get('/risk/isuserknown?username=bob')
     assert resp.status == 200
     assert await resp.text() == 'true'
 
@@ -41,9 +36,8 @@ async def test_handle_user_check(cli):
     assert resp.status == 200
     assert await resp.text() == 'false'
 
-
-async def test_handle_device_check(cli):
-    resp = await cli.get('/risk/isdeviceknown?device=3deakcskae4cmsk')
+    resp = await cli.get(
+        '/risk/isdeviceknown?device=77bd2cb0a74e4ecc75d0e507eeb73731')
     assert resp.status == 200
     assert await resp.text() == 'true'
 
@@ -51,9 +45,7 @@ async def test_handle_device_check(cli):
     assert resp.status == 200
     assert await resp.text() == 'false'
 
-
-async def test_handle_ip_check(cli):
-    resp = await cli.get('/risk/isipknown?ip=10.192.2.2')
+    resp = await cli.get('/risk/isipknown?ip=10.97.2.192')
     assert resp.status == 200
     assert await resp.text() == 'true'
 
@@ -61,29 +53,27 @@ async def test_handle_ip_check(cli):
     assert resp.status == 200
     assert await resp.text() == 'false'
 
-
-async def test_handle_succ_logindate(cli):
-    resp = await cli.get('/risk/lastsuccessfullogindate?username=Bob')
+    resp = await cli.get('/risk/lastsuccessfullogindate?username=bob')
     assert resp.status == 200
-    assert await resp.text() == '2022-02-06T12:38:20.012000Z'
+    assert await resp.text() == '2021-04-27T11:10:42.198082Z'
 
     resp = await cli.get('/risk/lastsuccessfullogindate?username=Kevin')
     assert resp.status == 200
     assert await resp.text() == 'No record for this user!'
 
-
-async def test_handle_fail_logindate(cli):
-    resp = await cli.get('/risk/lastfailedlogindate?username=Bob')
+    resp = await cli.get('/risk/lastfailedlogindate?username=bobUU')
     assert resp.status == 200
-    assert await resp.text() == '2022-02-06T12:39:59.341000Z'
+    assert await resp.text() == '2021-04-27T10:57:59.841657Z'
 
     resp = await cli.get('/risk/lastfailedlogindate?username=Kevin')
     assert resp.status == 200
     assert await resp.text() == 'No record for this user!'
 
+    resp = await cli.get('/risk/failedlogincountlastweek')
+    assert resp.status == 200
+    assert await resp.text() == '5'
 
-async def test_handle_internal_check(cli):
-    resp = await cli.get('/risk/isipinternal?ip=10.97.2.10')
+    resp = await cli.get('/risk/isipinternal?ip=10.97.2.192')
     assert resp.status == 200
     assert await resp.text() == 'true'
 
