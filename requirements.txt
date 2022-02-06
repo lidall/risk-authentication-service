@@ -1,0 +1,4 @@
+aiohttp
+requests
+pytest
+flake8

@@ -31,7 +31,7 @@ class Handler:
 
     async def handle_internal_check(self, request):
         ip = request.rel_url.query['ip']
-        if "10.97.2" in ip:
+        if "10.97.2." in ip:
             return web.Response(text="true")
         else:
             return web.Response(text="false")
