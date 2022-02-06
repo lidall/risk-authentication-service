@@ -31,11 +31,12 @@ class ParseFile:
         for line in content:
             if "authentication_type" in line:
                 log_detail = line.split(' [AUDIT] ')[1]
+                json_object = None
                 try:
                     json_object = json.loads(log_detail)
                 except ValueError:
-                    self.parseLog.error("Audit logs are not in json format, \
-                                        please double check.")
+                    self.parseLog.error("Audit logs are not in json format," + \
+                                        " please double check.")
                 if json_object and all(info in json_object
                                        for info in authentication_info):
                     username = json_object.get("distinguished_name_user")
@@ -56,7 +57,7 @@ class ParseFile:
                         self.db.set_failedLoginDict(username, unix_time)
                         self.db.set_failedLoginCount(unix_time)
                 else:
-                    self.parseLog.warning("Authentication log %s lacks required info.",
-                                          line)
+                    self.parseLog.warning("Authentication log " + \
+                                          line + " lacks required info.")
 
         self.parseLog.info("All authentication logs have been processed.")
