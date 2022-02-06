@@ -46,7 +46,7 @@ class TestParseFile(unittest.TestCase):
         self.assertEqual(self.db.knownDeviceList,
                          ["28b0016db5cd425975859abe570228f0"])
         self.assertEqual(self.db.successfulLoginDict,
-                         {"admin": 1619527452.700172})
+                         {"admin": 1619520252.700172})
         self.assertEqual(self.db.failedLoginDict, {})
         self.assertEqual(self.db.failedLoginCount, 0)
         self.assertEqual(self.db.knownIPList, ["10.97.3.53"])
