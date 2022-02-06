@@ -1,5 +1,4 @@
 import pytest
-from risk_authentication.risk_database import RiskDB
 from risk_authentication.server_handler import Handler
 from aiohttp import web
 
