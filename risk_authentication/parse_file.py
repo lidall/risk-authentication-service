@@ -4,6 +4,7 @@ import logging
 import time
 import os
 
+
 class ParseFile:
     def __init__(self, db):
         self.db = db
