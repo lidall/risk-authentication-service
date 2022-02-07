@@ -14,12 +14,30 @@ class ParseFile:
         time.tzset()
 
     def parse_timestamp(self, timestamp):
+        """
+
+        Input: String timestamp with format: '%Y-%m-%dT%H:%M:%S.%fZ'
+        Output: Float Unix time
+
+        Transform string timestamp to unix time
+        for easier comparison and storage
+
+        """
         date_format = datetime.datetime.strptime(
             timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
         unix_time = datetime.datetime.timestamp(date_format)
         return unix_time
 
     def parse_unixtime(self, unix_time):
+        """
+
+        Input: Float Unix time
+        Output: String timestamp with format: '%Y-%m-%dT%H:%M:%S.%fZ'
+
+        Transform unix time to string timestamp for
+        returning the result to clients
+
+        """
         timestamp = datetime.datetime.utcfromtimestamp(
             unix_time).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
         return timestamp

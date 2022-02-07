@@ -13,6 +13,17 @@ class RiskDB:
         self.weektime_start, self.weektime_end = self.previous_week_range()
 
     def previous_week_range(self):
+        """
+
+        Output: Int last weektime start unix integer,
+        last weektime end unix integer
+
+        This function is used to set the starting and ending
+        time of last week (based on the current runtime)
+        This function is not currently used in this implementation
+        but prepared for future usage.
+
+        """
         today = datetime.date.today()
         start_date = today + datetime.timedelta(-today.weekday(), weeks=-1)
         end_date = today + datetime.timedelta(-today.weekday() - 1)
@@ -47,7 +58,19 @@ class RiskDB:
             self.failedLoginDict.update({username: unix_time})
 
     def set_failedLoginCount(self, unix_time):
-        # if unix_time >= self.weektime_start
-        # and unix_time <= self.weektime_end:
-        # self.failedLoginCount += 1
+        """
+    
+        Input: Float unix time
+
+        In this implementation, once there's a failed login,
+        the counter will add one. However, the function can
+        be changed (Commented block) to decide if the failed
+        date is within the range of last week.
+
+        if unix_time >= self.weektime_start \
+        and unix_time <= self.weektime_end:
+            self.failedLoginCount += 1
+            
+        """
+
         self.failedLoginCount += 1
