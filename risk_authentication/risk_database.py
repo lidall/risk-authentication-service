@@ -59,7 +59,7 @@ class RiskDB:
 
     def set_failedLoginCount(self, unix_time):
         """
-    
+
         Input: Float unix time
 
         In this implementation, once there's a failed login,
@@ -70,7 +70,7 @@ class RiskDB:
         if unix_time >= self.weektime_start \
         and unix_time <= self.weektime_end:
             self.failedLoginCount += 1
-            
+
         """
 
         self.failedLoginCount += 1
