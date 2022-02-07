@@ -1,0 +1,6 @@
+aiohttp
+requests
+pytest
+flake8
+tox-travis
+pytest-aiohttp

@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.8"
+env:
+  - TOX_ENV=linters
+  - TOX_ENV=pytest
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+# command to run tests
+script: tox -e $TOX_ENV
