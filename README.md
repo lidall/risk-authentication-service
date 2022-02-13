@@ -43,3 +43,8 @@ if __name__ == "__main__":
 ## Implementation Doc
 
 Refer to [here](docs/doc.md) to see the current implementation of the risk authentication server.
+
+## Golang Implementation
+
+Refer to [here](https://github.com/lidall/risk_auth_go) to see the Golang implementation of the risk authentication server.
+
